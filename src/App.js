@@ -1,24 +1,24 @@
 import logo from './logo.svg';
 import './App.css';
+import { Fragment } from 'react';
+import FunctionComponent from './components/FunctionComponent';
+import ClassComponent from './components/ClassComponent';
+import HomeComponent from './components/BaiTapComponent/HomeComponent';
+import DataBinding from './DataBinding/DataBinding';
 
+// App component chính chứa các component con
+//<>: thẻ frament thẻ vô hình (<Fragment></Fragment>)
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+
+      <DataBinding/>
+
+      {/* <HomeComponent/> */}
+      {/* <FunctionComponent></FunctionComponent>
+      <FunctionComponent/>
+      <ClassComponent/> */}
+    </>
   );
 }
 
