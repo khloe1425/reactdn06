@@ -10,14 +10,25 @@ import StylingComponent from './StylingComponent/StylingComponent';
 import DemoLogin from './demoState/DemoLogin';
 import TangGiamFont from './demoState/TangGiamFont';
 import DoiMauXe from './demoState/DoiMauXe';
+import DemoProps from './DemoProps/DemoProps';
+import DemoRendermap from './DemoProps/DemoRendermap';
+import ProductList from './DemoProps/ShoesShop/ProductList';
+import BTXemChiTiet from './DemoProps/BTXemChiTiet/BTXemChiTiet';
 
 // App component chính chứa các component con
 //<>: thẻ frament thẻ vô hình (<Fragment></Fragment>)
 function App() {
   return (
     <>
+      <BTXemChiTiet/>
 
-      <DoiMauXe />
+      {/* <ProductList/> */}
+
+
+
+      {/* <DemoRendermap /> */}
+      {/* <DemoProps /> */}
+      {/* <DoiMauXe /> */}
 
       {/* <TangGiamFont/> */}
 
