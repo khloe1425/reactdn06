@@ -14,13 +14,20 @@ import DemoProps from './DemoProps/DemoProps';
 import DemoRendermap from './DemoProps/DemoRendermap';
 import ProductList from './DemoProps/ShoesShop/ProductList';
 import BTXemChiTiet from './DemoProps/BTXemChiTiet/BTXemChiTiet';
+import BTGioHang from './DemoProps/BTGioHang/BTGioHang';
 
 // App component chính chứa các component con
 //<>: thẻ frament thẻ vô hình (<Fragment></Fragment>)
 function App() {
   return (
     <>
-      <BTXemChiTiet/>
+
+    <BTGioHang/>
+
+
+
+
+      {/* <BTXemChiTiet/> */}
 
       {/* <ProductList/> */}
 

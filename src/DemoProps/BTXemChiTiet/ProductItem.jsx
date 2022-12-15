@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 
 export default class ProductItem extends Component {
   render() {
+    console.log("Item", this.props);
     let {hinhAnh,tenSP,giaBan} = this.props.phone
     return (
       <div className="card">
@@ -9,7 +10,10 @@ export default class ProductItem extends Component {
         <div className="card-body">
           <h5 className="card-title">{tenSP}</h5>
           <p className="card-text">{giaBan.toLocaleString()}</p>
-          <a href="#" className="btn btn-primary">Xem chi tiết</a>
+          <button onClick={() => { 
+              //TODO gọi method xemChiTiet
+              this.props.xemChiTiet(this.props.phone);
+           }} className="btn btn-primary">Xem chi tiết</button>
         </div>
       </div>
     )

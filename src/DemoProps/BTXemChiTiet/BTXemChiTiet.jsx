@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import ProductList from './ProductList'
+import ThongTinCHiTiet from './ThongTinCHiTiet'
 
 export default class BTXemChiTiet extends Component {
 
@@ -16,6 +17,15 @@ export default class BTXemChiTiet extends Component {
 
     //!đem renderPhoneList qua ProductList
     
+    //TODO Khai báo method
+    xemChiTiet = (thongTinCT) => {
+        let newState ={
+            phoneChiTiet: thongTinCT
+        }
+        this.setState(newState)
+    }
+
+
 
     render() {
         return (
@@ -23,33 +33,9 @@ export default class BTXemChiTiet extends Component {
                 {/* <div className="row">
                         {this.renderPhoneList()}
                 </div> */}
-                <ProductList phoneList={this.phoneList}/>
+                <ProductList phoneList={this.phoneList} xemChiTiet={this.xemChiTiet}/>
 
-                <div className="row py-5">
-                    <div className="col-4">
-                        <h3>{this.state.phoneChiTiet.tenSP}</h3>
-                        <img className='img-fluid' src={this.state.phoneChiTiet.hinhAnh} alt="" />
-                    </div>
-                    <div className="col-8">
-                        <h3>Thông số kỹ thuật</h3>
-                        <table className="table">
-                            {/* <thead>
-                                <tr>
-                                    <th scope="col"></th>
-                                    <th scope="col"></th>
-                                </tr>
-                            </thead> */}
-                            <tbody>
-                                <tr>
-                                    <td>Màn hình</td>
-                                    <td>{this.state.phoneChiTiet.manHinh}</td>
-                                </tr>
-
-                            </tbody>
-                        </table>
-
-                    </div>
-                </div>
+                <ThongTinCHiTiet phoneChiTiet={this.state.phoneChiTiet} />
             </div>
         )
     }
