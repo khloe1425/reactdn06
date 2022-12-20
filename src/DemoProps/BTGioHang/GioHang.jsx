@@ -11,18 +11,30 @@ export default class GioHang extends Component {
         </td>
         <td>{spGH.tenSP}</td>
         <td>
-          <button className='btn btn-danger'>-</button>
+          
+          <button onClick={() => { 
+              this.props.tangGiamSL(spGH.maSP, -1);
+           }} className='btn btn-danger'>-</button>
+
           <span>{spGH.soLuong}</span>
-          <button className='btn btn-success'>+</button>
+
+          <button onClick={() => { 
+              this.props.tangGiamSL(spGH.maSP, 1);
+           }} className='btn btn-success'>+</button>
+
         </td>
         <td>{spGH.giaBan.toLocaleString()}</td>
         <td>{(spGH.giaBan * spGH.soLuong).toLocaleString()}</td>
         <td>
-          <button className='btn btn-danger'>Xóa</button>
+          <button className='btn btn-danger' onClick={() => { 
+              this.props.xoaSP(spGH.maSP)
+           }} >Xóa</button>
         </td>
       </tr>
     })
   }
+
+
 
 
   render() {

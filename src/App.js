@@ -15,6 +15,7 @@ import DemoRendermap from './DemoProps/DemoRendermap';
 import ProductList from './DemoProps/ShoesShop/ProductList';
 import BTXemChiTiet from './DemoProps/BTXemChiTiet/BTXemChiTiet';
 import BTGioHang from './DemoProps/BTGioHang/BTGioHang';
+import BTTangGiamSo from './DemoRedux/BTTangGiamSo/BTTangGiamSo';
 
 // App component chính chứa các component con
 //<>: thẻ frament thẻ vô hình (<Fragment></Fragment>)
@@ -22,31 +23,14 @@ function App() {
   return (
     <>
 
-    <BTGioHang/>
+      <BTTangGiamSo />
+
+      {/* <BTGioHang/> */}
 
 
 
 
-      {/* <BTXemChiTiet/> */}
 
-      {/* <ProductList/> */}
-
-
-
-      {/* <DemoRendermap /> */}
-      {/* <DemoProps /> */}
-      {/* <DoiMauXe /> */}
-
-      {/* <TangGiamFont/> */}
-
-      {/* <DemoLogin/> */}
-
-
-      {/* <h2 className='heading2'>App component</h2>
-      <h3 className='heading3'>App component h3</h3>
-    <StylingComponent/> */}
-
-      {/* <HandleEvent/> */}
 
     </>
   );

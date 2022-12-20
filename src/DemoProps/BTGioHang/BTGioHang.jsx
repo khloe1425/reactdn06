@@ -31,7 +31,7 @@ export default class BTGioHang extends Component {
         //     return sp.maSP === maSP
         // })
         let spTK = mangGioHangCN.find(sp => sp.maSP === maSP)
-        
+
         if (spTK) {
             //! Nếu sp đã có ở GH => tăng số lượng + 1
             // spTK.soLuong = spTK.soLuong + 1;
@@ -48,7 +48,7 @@ export default class BTGioHang extends Component {
             }
             //! thêm vào mảng giỏ hàng (newState)
             //copy phần tử của mảng cũ , thêm phần tử mới
-            mangGioHangCN = [...mangGioHangCN,spGH ]
+            mangGioHangCN = [...mangGioHangCN, spGH]
         }
 
         this.setState({
@@ -64,18 +64,84 @@ export default class BTGioHang extends Component {
 
     //TODO đem renderGioHang sang GioHang
 
+    xoaSP = (idXoa) => {
+        // console.log(idXoa);
+        //? splice(index,1)=> xóa sản phẩm ra khỏi mảng
+        //? filter() => lọc và giữ lại các sản phẩm không cần xóa. Trả về 1 mảng mới chứa các giá trị đã được lọc
+        //!mangCapNhat: chứa các sản phẩm không cần xóa => các sp có id  != idXoa
+        let mangCapNhat =  this.state.mangGioHang.filter((spGH) => { 
+                return spGH.maSP !== idXoa
+         });
+        //?  let mangCapNhat =  this.state.mangGioHang.filter(spGH => spGH.maSP !== idXoa);
+
+        //  console.log("mangCapNhat",mangCapNhat);
+
+        this.setState({
+            mangGioHang: mangCapNhat
+        })
+    }
+
+    tangGiamSL = (idSL, soLuong) => {
+        // console.log(idSL, soLuong);
+        let mangCapNhat = [...this.state.mangGioHang];
+        //TODO tìm sản phẩm cần cập nhật sl
+        let spTK = mangCapNhat.find((spGH) => { 
+            return spGH.maSP === idSL
+         });
+         //console.log("spTK",spTK);
+         if(spTK){
+            // tìm thấy => cập sl & setState
+            //!C1: Nếu số lượng < 1 => thông báo và giữ nguyên số lương là 1
+             //! C2: nếu số lượng == 0 => xóa sản phẩm khỏi mảng (xử lý như xóa sản phẩm)
+            spTK.soLuong += soLuong
+            if(spTK.soLuong < 1){
+                alert("Số lượng không được nhỏ hơn 1")
+                spTK.soLuong  = 1;
+               
+            }
+
+            this.setState({
+                mangGioHang: mangCapNhat
+            })
+            
+         }
+    }
+
+    renderTongSL = () => {
+        //! C1: tính tổng số lượng sản phẩm trong giỏ hàng
+        //! C2: đếm số loại sản phẩm trong giỏ hàng => số phần tử có trong mảng giỏ hàng => this.mangGioHang.length
+
+        //? reduce()
+        //let tong = 0;// kết quả cuối cùng được trả về từ reduce
+        //? reduce((tongSL, spGH)=>{} , 0 ): tongSL biến tích lũy trong việc công dồn số,
+        //? spGH: từng phần tử của mảng 
+        //? 0 : tham số thứ 2 của reduce là giá trị khởi tạo cua biến tích lũy (tongSL)
+       // tong = this.state.mangGioHang.reduce((tongSL,spGH) => {
+        //    return tongSL += spGH.soLuong
+        //  }, 0);
+
+       // console.log("tong",tong);
+
+        //return tong;
+
+        return this.state.mangGioHang.reduce((tongSL,spGH) => tongSL += spGH.soLuong, 0);
+
+
+        
+    }
+
     render() {
         return (
             <div className='container py-5'>
                 <div className="row">
                     <div className="col-12">
-                        <p style={{ width: "20%" }} data-toggle="modal" data-target="#exampleModal" className='alert alert-primary'>Giỏ hàng (0)</p>
+                        <p style={{ width: "20%" }} data-toggle="modal" data-target="#exampleModal" className='alert alert-primary'>Giỏ hàng ({this.renderTongSL()})</p>
                     </div>
                 </div>
 
                 <ProductList themGioHang={this.themGioHang} phoneList={this.phoneList} />
 
-                <GioHang mangGioHang={this.state.mangGioHang} />
+                <GioHang tangGiamSL={this.tangGiamSL}  xoaSP={this.xoaSP}  mangGioHang={this.state.mangGioHang} />
 
             </div>
         )
