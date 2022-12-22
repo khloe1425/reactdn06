@@ -16,6 +16,7 @@ import ProductList from './DemoProps/ShoesShop/ProductList';
 import BTXemChiTiet from './DemoProps/BTXemChiTiet/BTXemChiTiet';
 import BTGioHang from './DemoProps/BTGioHang/BTGioHang';
 import BTTangGiamSo from './DemoRedux/BTTangGiamSo/BTTangGiamSo';
+import GioHangRedux from './DemoRedux/GioHangRedux/GioHangRedux';
 
 // App component chính chứa các component con
 //<>: thẻ frament thẻ vô hình (<Fragment></Fragment>)
@@ -23,7 +24,10 @@ function App() {
   return (
     <>
 
-      <BTTangGiamSo />
+
+      <GioHangRedux/>
+      
+      {/* <BTTangGiamSo /> */}
 
       {/* <BTGioHang/> */}
 
