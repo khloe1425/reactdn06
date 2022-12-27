@@ -17,6 +17,7 @@ import BTXemChiTiet from './DemoProps/BTXemChiTiet/BTXemChiTiet';
 import BTGioHang from './DemoProps/BTGioHang/BTGioHang';
 import BTTangGiamSo from './DemoRedux/BTTangGiamSo/BTTangGiamSo';
 import GioHangRedux from './DemoRedux/GioHangRedux/GioHangRedux';
+import BTGameTaiXiu from './DemoRedux/BTGameTaiXiu/BTGameTaiXiu';
 
 // App component chính chứa các component con
 //<>: thẻ frament thẻ vô hình (<Fragment></Fragment>)
@@ -24,8 +25,10 @@ function App() {
   return (
     <>
 
+      <BTGameTaiXiu/>
 
-      <GioHangRedux/>
+      
+      {/* <GioHangRedux/> */}
       
       {/* <BTTangGiamSo /> */}
 
