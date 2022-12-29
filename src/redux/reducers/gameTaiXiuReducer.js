@@ -27,6 +27,7 @@ export const gameTaiXiuReducer = (state = initialState, action) => {
             let mangNgauNhien = [];
            
             for (let i = 0; i < 3; i++) {
+
                 let num = Math.floor(Math.random() * 6) + 1
                 let xucxac = {
                     id: `xx${i}`,
@@ -37,8 +38,26 @@ export const gameTaiXiuReducer = (state = initialState, action) => {
                 mangNgauNhien = [...mangNgauNhien, xucxac]
 
             }
-            console.log(mangNgauNhien);
+            // console.log(mangNgauNhien);
             state.mangXucXac = mangNgauNhien
+
+
+            //TODO: Kiểm tra kết quả, tongDiem >=11 Tài ; tongDiem <11 Xỉu
+            /**
+             * TH1: banChon true Tài && tongDiem >=11 Tài => Thắng
+             * TH2: banChon false Xỉu && tongDiem <11 Xỉu => Thắng
+             */
+            let tongDiem = state.mangXucXac.reduce((tong,xucxac,index) => { 
+                    return tong += xucxac.diem;
+             },0);
+             console.log(tongDiem);
+            //  !state.banChon  => state.banChon == false
+             if( (state.banChon && tongDiem >= 11 ) || (!state.banChon && tongDiem < 11) ){
+                //thắng 
+                state.soBanThang +=1;
+             }
+
+             state.tongSoBan +=1;
 
             return { ...state }
         }

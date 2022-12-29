@@ -1,6 +1,7 @@
 import { combineReducers, createStore } from "redux";
 import { gameTaiXiuReducer } from "./reducers/gameTaiXiuReducer";
 import { gioHangReducer } from "./reducers/gioHangReducer";
+import { QLNDReducer } from "./reducers/QLDNReducer";
 
 //? store sẽ cung cấp cho component các reducer( là 1 hàm chứa state, bao gồm cả setState)
 //? rootReducer : reduce tổng chứa nhiều reducer
@@ -37,7 +38,8 @@ const rootReducer = combineReducers({
     gioHangReducer,
     // gameTaiXiuReducer:gameTaiXiuReducer
     gameTaiXiuReducer,
-
+    // QLNDReducer:QLNDReducer
+    QLNDReducer,
 
 
 });

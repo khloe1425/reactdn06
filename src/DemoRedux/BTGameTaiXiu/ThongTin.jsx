@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 class ThongTin extends Component {
     render() {
-        console.log("ThongTin", this.props);
+        // console.log("ThongTin", this.props);
         let {banChon, soBanThang, tongSoBan} = this.props;
         return (
             <div className="row m-5">
