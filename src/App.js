@@ -19,6 +19,7 @@ import BTTangGiamSo from './DemoRedux/BTTangGiamSo/BTTangGiamSo';
 import GioHangRedux from './DemoRedux/GioHangRedux/GioHangRedux';
 import BTGameTaiXiu from './DemoRedux/BTGameTaiXiu/BTGameTaiXiu';
 import BTQLND from './DemoRedux/BTQLND/BTQLND';
+import ParentComponent from './LifeCycle/DemoLifeCycle/ParentComponent';
 // import BTQLND from './LifeCycle/BTQLND/BTQLND';
 
 // App component chính chứa các component con
@@ -27,7 +28,13 @@ function App() {
   return (
     <>
 
-      <BTQLND/>
+    <ParentComponent/>
+
+
+
+
+
+      {/* <BTQLND/> */}
 
 
       {/* <BTQLND/> */}
