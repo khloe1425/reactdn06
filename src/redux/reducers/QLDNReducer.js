@@ -55,14 +55,14 @@ const initialState = {
 export const QLNDReducer = (state = initialState, action) => {
     switch (action.type) {
         case "LUU_DATA_FORM":
-                // console.log(action);
-                let newND = {
-                    values: action.newValues,
-                    errors: action.newErrors
-                }
-                state.nguoiDung = newND;
+            // console.log(action);
+            let newND = {
+                values: action.newValues,
+                errors: action.newErrors
+            }
+            state.nguoiDung = newND;
 
-            return {...state}
+            return { ...state }
         case "THEM_ND":
 
             state.mangNguoiDung = [...state.mangNguoiDung, action.nd]
@@ -77,10 +77,37 @@ export const QLNDReducer = (state = initialState, action) => {
             return { ...state };
 
         case "XEM_CHI_TIET":
-            // state.nguoiDungChiTiet = action.ndXem
-
+            state.nguoiDung.values = action.ndXem
+            //copy đối tượng nguoiDung để đổi địa chỉ ô nhớ
+            state.nguoiDung = { ...state.nguoiDung }
 
             return { ...state };
+
+        case "CAP_NHAT":
+            //!Tìm user trong mảng (mã/id/taiKhoan)
+            //find() => object, findIndex() => index
+            // let userFind = state.mangNguoiDung.find((nd) => { 
+            //     return nd.taiKhoan === action.ndCapNhat.taiKhoan
+            //  });
+            //!Cập nhật thông của user tìm được
+            //  if(userFind){
+            //     //tìm thấy => cập nhật
+            //     // userFind = action.ndCapNhat ; => không cập nhật được
+            //     userFind.hoTen = action.hoTen
+            //     userFind.matKhau = action.matKhau
+            //  }
+
+            let indexCapNhat = state.mangNguoiDung.findIndex((nd) => {
+                return nd.taiKhoan === action.ndCapNhat.taiKhoan
+            }); // nếu tìm không thấy trả về -1
+            if(indexCapNhat > -1){
+                //tìm thấy
+                state.mangNguoiDung[indexCapNhat] = action.ndCapNhat
+            }
+
+            state.mangNguoiDung = [...state.mangNguoiDung];
+
+            return {...state};
 
         default:
             return state

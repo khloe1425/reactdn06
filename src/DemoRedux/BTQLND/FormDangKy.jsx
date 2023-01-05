@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 class FormDangKy extends Component {
 
- 
+
 
   handleOnChange = (event) => {
     let { value, name } = event.target;
@@ -36,11 +36,11 @@ class FormDangKy extends Component {
     newErrors[name] = messageError
 
     //TODO đẩy dữ liệu values và error lên reducer
-    let action ={
-      type:"LUU_DATA_FORM",
+    let action = {
+      type: "LUU_DATA_FORM",
       // newValues:newValues,
       newValues,
-      newErrors:newErrors
+      newErrors: newErrors
     }
     this.props.dispatch(action);
 
@@ -53,38 +53,31 @@ class FormDangKy extends Component {
     event.preventDefault();
 
     let isValid = true;
-    //kiểm tra errors còn chứa nội dung nào lỗi không?
-    for (const property in this.state.errors) {
-      //tên thuộc tính
-      // console.log(property);
-      if (this.state.errors[property] !== "") {
-        //thuộc tính còn bị lỗi
+
+    for (const property in this.props.nguoiDung.errors) {
+      if (this.props.nguoiDung.errors[property] !== "") {
+
         isValid = false;
       }
     }
 
-    //kiểm tra dữ liệu rỗng khi user không đổi giá trị (không chạy onChange)
-    for (const property in this.state.values) {
-      if (this.state.values[property] === "") {
+    for (const property in this.props.nguoiDung.values) {
+      if (this.props.nguoiDung.values[property] === "") {
         //người dùng không điền
-        
+
         isValid = false;
       }
     }
-
-
 
     if (isValid) {
-      //không còn lỗi => đẩy values (Người Dùng mới) lên redux
-      // console.log("hợp lệ");
-      let action ={
-        type:"THEM_ND",
-        nd: this.state.values
+      let action = {
+        type: "THEM_ND",
+        nd: this.props.nguoiDung.values
       }
 
       this.props.dispatch(action);
 
-    }else{
+    } else {
       alert("Form không được để trống")
     }
 
@@ -93,9 +86,9 @@ class FormDangKy extends Component {
 
   render() {
     console.log("Form", this.props)
-    
-    let {taiKhoan,hoTen,email,matKhau,sdt,maLoaiND} = this.props.nguoiDung.values;
-    let {errors} = this.props.nguoiDung
+
+    let { taiKhoan, hoTen, email, matKhau, sdt, maLoaiND } = this.props.nguoiDung.values;
+    let { errors } = this.props.nguoiDung
 
     return (
 
@@ -107,14 +100,14 @@ class FormDangKy extends Component {
             <div className="row py-3">
               <div className="col">
                 <label htmlFor="taiKhoan">Tài khoản</label>
-                <input value={taiKhoan}   onChange={(event) => {
+                <input value={taiKhoan} onChange={(event) => {
                   this.handleOnChange(event)
                 }} name='taiKhoan' type="text" className="form-control" placeholder="Tài khoản" />
                 <p className='text-danger'>{errors.taiKhoan}</p>
               </div>
               <div className="col">
                 <label htmlFor="hoTen">Họ tên</label>
-                <input value={hoTen}  onChange={this.handleOnChange} name='hoTen' type="text" className="form-control" placeholder="Họ Tên" />
+                <input value={hoTen} onChange={this.handleOnChange} name='hoTen' type="text" className="form-control" placeholder="Họ Tên" />
                 <p className='text-danger'>{errors.hoTen}</p>
               </div>
             </div>
@@ -122,12 +115,12 @@ class FormDangKy extends Component {
             <div className="row py-3">
               <div className="col">
                 <label htmlFor="matKhau">Mật khẩu</label>
-                <input value={matKhau}  onChange={this.handleOnChange} name='matKhau' type="password" className="form-control" placeholder="Mật khẩu" />
+                <input value={matKhau} onChange={this.handleOnChange} name='matKhau' type="password" className="form-control" placeholder="Mật khẩu" />
                 <p className='text-danger'>{errors.matKhau}</p>
               </div>
               <div className="col">
                 <label htmlFor="sdt">Số điện thoại</label>
-                <input value={sdt}  onChange={this.handleOnChange} name='sdt' type="text" className="form-control" placeholder="Số điện thoại" />
+                <input value={sdt} onChange={this.handleOnChange} name='sdt' type="text" className="form-control" placeholder="Số điện thoại" />
                 <p className='text-danger'>{errors.sdt}</p>
               </div>
             </div>
@@ -151,7 +144,16 @@ class FormDangKy extends Component {
             <div className='py-3'>
 
               <button className='btn btn-success mr-5'>Submit</button>
-              <button className='btn btn-info'>Reset</button>
+              <button onClick={(event) => { 
+                  event.preventDefault();
+                  let action ={
+                    type:"CAP_NHAT",
+                    ndCapNhat:this.props.nguoiDung.values
+                  }
+                  this.props.dispatch(action);
+
+               }} className='btn btn-success mr-5'>Cập Nhật</button>
+              <button type='reset' className='btn btn-info'>Reset</button>
             </div>
 
           </form>
@@ -165,7 +167,7 @@ class FormDangKy extends Component {
 
 
 const mapStateToProps = (rootReducer) => {
-  return{
+  return {
     // nguoiDungChiTiet: rootReducer.QLNDReducer.nguoiDungChiTiet
     nguoiDung: rootReducer.QLNDReducer.nguoiDung
   }
