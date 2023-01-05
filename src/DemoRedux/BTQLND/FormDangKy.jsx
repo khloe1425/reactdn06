@@ -3,36 +3,15 @@ import { connect } from 'react-redux';
 
 class FormDangKy extends Component {
 
-  //B1: lấy data từ form => lưu vào state
-  state = {
-    values: {
-      taiKhoan: "",
-      hoTen: "",
-      matKhau: "",
-      sdt: "",
-      email: "",
-      maLoaiND: "Khách Hàng"
-    },
-    errors: {
-      taiKhoan: "",
-      hoTen: "",
-      matKhau: "",
-      sdt: "",
-      email: "",
-      maLoaiND: ""
-    }
-  }
+ 
 
   handleOnChange = (event) => {
-    // console.log("event target",event.target);
-    // let value = event.target.value
     let { value, name } = event.target;
 
     //giữ lại thuộc tính cũ và điền giá trị mới cho thuộc tính đang được nhập
-    let newValues = { ...this.state.values };
+    let newValues = { ...this.props.nguoiDung.values };
     // newValues["taiKhoan"] = value;
     newValues[name] = value;
-
 
     //TODO: validtion data
     let typeform = event.target.getAttribute("typeform");
@@ -52,17 +31,19 @@ class FormDangKy extends Component {
       }
     }
 
-
     //giữ lại thuộc tính cũ của errors và điền giá trị mới cho thuộc tính được kiểm tra
-    let newErrors = { ...this.state.errors };
+    let newErrors = { ...this.props.nguoiDung.errors };
     newErrors[name] = messageError
 
-    this.setState({
-      values: newValues,
-      errors: newErrors
-    }, () => {
-      console.log(this.state);
-    });
+    //TODO đẩy dữ liệu values và error lên reducer
+    let action ={
+      type:"LUU_DATA_FORM",
+      // newValues:newValues,
+      newValues,
+      newErrors:newErrors
+    }
+    this.props.dispatch(action);
+
 
   }
 
@@ -113,8 +94,8 @@ class FormDangKy extends Component {
   render() {
     console.log("Form", this.props)
     
-    let {taiKhoan,hoTen,email,matKhau,sdt,maLoaiND} = this.props.nguoiDungChiTiet;
-
+    let {taiKhoan,hoTen,email,matKhau,sdt,maLoaiND} = this.props.nguoiDung.values;
+    let {errors} = this.props.nguoiDung
 
     return (
 
@@ -129,12 +110,12 @@ class FormDangKy extends Component {
                 <input value={taiKhoan}   onChange={(event) => {
                   this.handleOnChange(event)
                 }} name='taiKhoan' type="text" className="form-control" placeholder="Tài khoản" />
-                <p className='text-danger'>{this.state.errors.taiKhoan}</p>
+                <p className='text-danger'>{errors.taiKhoan}</p>
               </div>
               <div className="col">
                 <label htmlFor="hoTen">Họ tên</label>
                 <input value={hoTen}  onChange={this.handleOnChange} name='hoTen' type="text" className="form-control" placeholder="Họ Tên" />
-                <p className='text-danger'>{this.state.errors.hoTen}</p>
+                <p className='text-danger'>{errors.hoTen}</p>
               </div>
             </div>
 
@@ -142,12 +123,12 @@ class FormDangKy extends Component {
               <div className="col">
                 <label htmlFor="matKhau">Mật khẩu</label>
                 <input value={matKhau}  onChange={this.handleOnChange} name='matKhau' type="password" className="form-control" placeholder="Mật khẩu" />
-                <p className='text-danger'>{this.state.errors.matKhau}</p>
+                <p className='text-danger'>{errors.matKhau}</p>
               </div>
               <div className="col">
                 <label htmlFor="sdt">Số điện thoại</label>
                 <input value={sdt}  onChange={this.handleOnChange} name='sdt' type="text" className="form-control" placeholder="Số điện thoại" />
-                <p className='text-danger'>{this.state.errors.sdt}</p>
+                <p className='text-danger'>{errors.sdt}</p>
               </div>
             </div>
 
@@ -155,7 +136,7 @@ class FormDangKy extends Component {
               <div className="col">
                 <label htmlFor="email">Email</label>
                 <input value={email} onChange={this.handleOnChange} typeform="email" name='email' type="text" className="form-control" placeholder="Email" />
-                <p className='text-danger'>{this.state.errors.email}</p>
+                <p className='text-danger'>{errors.email}</p>
               </div>
               <div className="col">
                 <label htmlFor="maLoaiND">Mã loại ND</label>
@@ -163,7 +144,7 @@ class FormDangKy extends Component {
                   <option value={"Khách Hàng"}>Khách Hàng</option>
                   <option value={"Quản Trị"}>Quản Trị</option>
                 </select>
-                <p className='text-danger'>{this.state.errors.maLoaiND}</p>
+                <p className='text-danger'>{errors.maLoaiND}</p>
               </div>
             </div>
 
@@ -185,7 +166,8 @@ class FormDangKy extends Component {
 
 const mapStateToProps = (rootReducer) => {
   return{
-    nguoiDungChiTiet: rootReducer.QLNDReducer.nguoiDungChiTiet
+    // nguoiDungChiTiet: rootReducer.QLNDReducer.nguoiDungChiTiet
+    nguoiDung: rootReducer.QLNDReducer.nguoiDung
   }
 }
 
