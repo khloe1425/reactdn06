@@ -86,7 +86,7 @@ class FormDangKy extends Component {
     for (const property in this.state.values) {
       if (this.state.values[property] === "") {
         //người dùng không điền
-        
+
         isValid = false;
       }
     }
@@ -96,25 +96,57 @@ class FormDangKy extends Component {
     if (isValid) {
       //không còn lỗi => đẩy values (Người Dùng mới) lên redux
       // console.log("hợp lệ");
-      let action ={
-        type:"THEM_ND",
+      let action = {
+        type: "THEM_ND",
         nd: this.state.values
       }
 
       this.props.dispatch(action);
 
-    }else{
+    } else {
       alert("Form không được để trống")
     }
 
 
   }
 
+  // static getDerivedStateFromProps(newProps, currentState) {
+  //   console.log("newProps", newProps);
+  //   console.log("currentState", currentState);
+
+  //   // Kiểm tra nếu props có đổi không (thực hiện Xem thông tin CT)
+  //   if(newProps.nguoiDungChiTiet.taiKhoan === currentState.values.taiKhoan ){
+  //       // => dữ liệu không đổi 
+  //       return currentState; // trả về state hiện tại của component
+  //   }
+
+  //   //Props đổi
+  //   //lưu props vào state (values) => hiển thị đươc dữ liệu của props (nguoiDungChiTiet) lên UI
+  //   //return về state mới
+  //   //copy dữ liệu ban đầu của state (copy errors), lưu giá trị của  props (nguoiDungChiTiet)  vào values
+  //   return {
+  //     ...currentState,
+  //     values:newProps.nguoiDungChiTiet
+  //   }
+
+  // }
+
+  //!chỉ chạy khi props đổi 
+  componentWillReceiveProps(newProps) {
+      this.setState({
+        values: newProps.nguoiDungChiTiet
+      })
+  }
+
+
   render() {
     console.log("Form", this.props)
-    
-    let {taiKhoan,hoTen,email,matKhau,sdt,maLoaiND} = this.props.nguoiDungChiTiet;
 
+    // let {taiKhoan,hoTen,email,matKhau,sdt,maLoaiND} = this.props.nguoiDungChiTiet;
+
+    //!Để gõ được trên form thì phải binding data từ state => chức xem không chạy được 
+    //!Solution: => dùng lifecycle kiểm tra khi nào props đổi => nếu props đổi (đang thực hiện chức năng Xem) =>  lưu props vào state
+    let { taiKhoan, hoTen, email, matKhau, sdt, maLoaiND } = this.state.values;
 
     return (
 
@@ -126,14 +158,14 @@ class FormDangKy extends Component {
             <div className="row py-3">
               <div className="col">
                 <label htmlFor="taiKhoan">Tài khoản</label>
-                <input value={taiKhoan}   onChange={(event) => {
+                <input value={taiKhoan} onChange={(event) => {
                   this.handleOnChange(event)
                 }} name='taiKhoan' type="text" className="form-control" placeholder="Tài khoản" />
                 <p className='text-danger'>{this.state.errors.taiKhoan}</p>
               </div>
               <div className="col">
                 <label htmlFor="hoTen">Họ tên</label>
-                <input value={hoTen}  onChange={this.handleOnChange} name='hoTen' type="text" className="form-control" placeholder="Họ Tên" />
+                <input value={hoTen} onChange={this.handleOnChange} name='hoTen' type="text" className="form-control" placeholder="Họ Tên" />
                 <p className='text-danger'>{this.state.errors.hoTen}</p>
               </div>
             </div>
@@ -141,12 +173,12 @@ class FormDangKy extends Component {
             <div className="row py-3">
               <div className="col">
                 <label htmlFor="matKhau">Mật khẩu</label>
-                <input value={matKhau}  onChange={this.handleOnChange} name='matKhau' type="password" className="form-control" placeholder="Mật khẩu" />
+                <input value={matKhau} onChange={this.handleOnChange} name='matKhau' type="password" className="form-control" placeholder="Mật khẩu" />
                 <p className='text-danger'>{this.state.errors.matKhau}</p>
               </div>
               <div className="col">
                 <label htmlFor="sdt">Số điện thoại</label>
-                <input value={sdt}  onChange={this.handleOnChange} name='sdt' type="text" className="form-control" placeholder="Số điện thoại" />
+                <input value={sdt} onChange={this.handleOnChange} name='sdt' type="text" className="form-control" placeholder="Số điện thoại" />
                 <p className='text-danger'>{this.state.errors.sdt}</p>
               </div>
             </div>
@@ -184,7 +216,7 @@ class FormDangKy extends Component {
 
 
 const mapStateToProps = (rootReducer) => {
-  return{
+  return {
     nguoiDungChiTiet: rootReducer.QLNDReducer.nguoiDungChiTiet
   }
 }

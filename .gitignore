@@ -1,2 +1,3 @@
 # Quy định các file và folder không được đưa lên github
 /node_modules
+.env

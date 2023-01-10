@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import CardVote from './CardVote'
+import CardVotePureComponent from './CardVotePureComponent'
 import ChidComponent from './ChidComponent'
 import Footer from './Footer'
 
@@ -20,7 +22,8 @@ export default class ParentComponent extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            number: 0
+            number: 0,
+            vote: 0
         }
         console.log("constructor Parent")
     }
@@ -31,14 +34,27 @@ export default class ParentComponent extends Component {
         return null;
     }
 
-     //!chạy trước render (updating)
-    shouldComponentUpdate(newProps,newState){
+    //!chạy trước render (updating)
+    shouldComponentUpdate(newProps, newState) {
         //!quy định được render lại UI hay không
         //return true => được render lại
         //false => không dược render lại
         console.log("shouldComponentUpdate Parent")
         return true
     }
+
+    renderChild = () => {
+
+        if (this.state.number < 2) {
+            return <ChidComponent number={this.state.number} />
+        }else{
+            return "";
+        }
+
+
+    }
+
+
 
 
     render() {
@@ -48,15 +64,29 @@ export default class ParentComponent extends Component {
                 <p>Parent</p>
                 <div className='py-5'>
                     <span className='mx-3'>{this.state.number}</span>
-                    <button onClick={() => { 
+                    <button onClick={() => {
                         this.setState({
                             number: this.state.number + 1
                         })
-                     }} className='btn btn-danger'>+</button>
+                    }} className='btn btn-danger'>+</button>
+
+
                 </div>
 
-                <ChidComponent number={this.state.number} />
-                <Footer/>
+                {this.renderChild()}
+
+                <p>Vote</p>
+                <button onClick={() => {
+                    this.setState({
+                        vote: this.state.vote + 1
+                    })
+                }} className='btn btn-danger'>Vote</button>
+                <CardVote vote={this.state.vote} />
+                
+                <CardVotePureComponent vote={this.state.vote}/>
+
+
+                <Footer />
             </div>
         )
     }

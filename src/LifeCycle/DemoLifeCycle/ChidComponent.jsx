@@ -6,6 +6,7 @@ export default class ChidComponent extends Component {
         super(props)
         this.state = {}
         console.log("constructor  Child")
+        this.notifyStories = {}
     }
 
     static getDerivedStateFromProps(newProps, currentState) {
@@ -29,11 +30,26 @@ export default class ChidComponent extends Component {
     }
 
     componentDidMount(prevProps, prevState){
-        console.log("componentDidMount Child")
+        console.log("componentDidMount Child");
+
+        //sau khi load xong ứng dụng chạy interval
+        this.notifyStories = setInterval(() => { 
+            console.log("Check stories")
+         },1000)
     }
 
     componentDidUpdate(prevProps, prevState) {
 
         console.log("componentDidUpdate Child")
     }
+
+
+    //sẽ được gọi ở thời điểm trước khi component bị xóa khỏi UI (unmounting)
+    //Có 1 đoạn code chạy thông báo về storise (thông báo mỗi giây 1 lần) => khi mà component biến mất thì cần tắt thông báo
+    componentWillUnmount(){
+        console.log("componentWillUnmount");
+        clearInterval(this.notifyStories)
+
+    }
+
 }

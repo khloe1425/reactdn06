@@ -28,84 +28,39 @@ const initialState = {
             maLoaiND: "Khách Hàng"
         }
     ],
-    nguoiDung: {
-        //value lấy từ form
-        values: {
-            taiKhoan: "",
-            hoTen: "",
-            matKhau: "",
-            sdt: "",
-            email: "",
-            maLoaiND: "Khách Hàng"
-        },
-        errors: {
-            taiKhoan: "",
-            hoTen: "",
-            matKhau: "",
-            sdt: "",
-            email: "",
-            maLoaiND: ""
-        }
+    nguoiDungChiTiet: {
+        taiKhoan: "",
+        hoTen: "",
+        matKhau: "",
+        sdt: "",
+        email: "",
+        maLoaiND: ""
     },
-
     isLogin: true,//ví dụ lưu trữ nhiều kiểu dữ liệu
 }
 
 
 export const QLNDReducer = (state = initialState, action) => {
     switch (action.type) {
-        case "LUU_DATA_FORM":
-            // console.log(action);
-            let newND = {
-                values: action.newValues,
-                errors: action.newErrors
-            }
-            state.nguoiDung = newND;
-
-            return { ...state }
         case "THEM_ND":
-
+            // state.mangNguoiDung.push(action.nd);
+            //console.log(state.mangNguoiDung)
+            //Spread operator
             state.mangNguoiDung = [...state.mangNguoiDung, action.nd]
-            return { ...state }
+            return { ...state }//copy state cũ thành state => đổi dịa chỉ ô nhớ => return state mới
         case "XOA_ND":
-
+            //Lọc và return mảng mới chứa các người dùng không cần xóa
+            //=> không cần copy, filter giup tạo mảng mới => đổi địa chỉ ô nhớ
             state.mangNguoiDung = state.mangNguoiDung.filter((nd) => {
                 return nd.taiKhoan !== action.tkXoa
             });
-
+            // console.log(state.mangNguoiDung);
 
             return { ...state };
 
         case "XEM_CHI_TIET":
-            state.nguoiDung.values = action.ndXem
-            //copy đối tượng nguoiDung để đổi địa chỉ ô nhớ
-            state.nguoiDung = { ...state.nguoiDung }
-
-            return { ...state };
-
-        case "CAP_NHAT":
-            //!Tìm user trong mảng (mã/id/taiKhoan)
-            //find() => object, findIndex() => index
-            // let userFind = state.mangNguoiDung.find((nd) => { 
-            //     return nd.taiKhoan === action.ndCapNhat.taiKhoan
-            //  });
-            //!Cập nhật thông của user tìm được
-            //  if(userFind){
-            //     //tìm thấy => cập nhật
-            //     // userFind = action.ndCapNhat ; => không cập nhật được
-            //     userFind.hoTen = action.hoTen
-            //     userFind.matKhau = action.matKhau
-            //  }
-
-            let indexCapNhat = state.mangNguoiDung.findIndex((nd) => {
-                return nd.taiKhoan === action.ndCapNhat.taiKhoan
-            }); // nếu tìm không thấy trả về -1
-            if(indexCapNhat > -1){
-                //tìm thấy
-                state.mangNguoiDung[indexCapNhat] = action.ndCapNhat
-            }
-
-            state.mangNguoiDung = [...state.mangNguoiDung];
+            state.nguoiDungChiTiet = action.ndXem
+            // console.log(state.nguoiDungChiTiet);
 
             return {...state};
 
